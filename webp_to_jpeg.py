@@ -1,27 +1,22 @@
 import os
-from tkinter import Tk, Label, Button, filedialog
+from tkinter import Tk, Label, Button, filedialog, Frame, BOTH, LEFT, RIGHT, TOP
 from PIL import Image
 
 def convert_webp_to_jpeg(input_dir, output_dir):
-    # Create the output directory if it does not exist
     os.makedirs(output_dir, exist_ok=True)
     
-    # Iterate over files in the input directory
     for filename in os.listdir(input_dir):
         if filename.endswith(".webp"):
-            # Full path to the input file
             webp_path = os.path.join(input_dir, filename)
-            # Change the extension to .jpeg for the output file
             jpeg_filename = os.path.splitext(filename)[0] + ".jpeg"
-            # Full path to the output file
             jpeg_path = os.path.join(output_dir, jpeg_filename)
             
-            # Open the .webp file and convert it to .jpeg
             with Image.open(webp_path) as img:
                 img = img.convert("RGB")
                 img.save(jpeg_path, "JPEG")
     
     print("Conversion completed.")
+    status_label.config(text="Conversion completed!", fg="green")
 
 def select_input_directory():
     input_dir = filedialog.askdirectory()
@@ -40,25 +35,35 @@ def start_conversion():
     if input_dir and output_dir:
         convert_webp_to_jpeg(input_dir, output_dir)
     else:
-        print("Please select both input and output directories.")
+        status_label.config(text="Please select both input and output directories.", fg="red")
 
-# Create the main window
 root = Tk()
 root.title("WEBP to JPEG Converter")
+root.geometry("400x250")
 
-# Create and place the widgets
-input_label = Label(root, text="Input Directory: ")
-input_label.pack(pady=10)
-input_button = Button(root, text="Select Input Directory", command=select_input_directory)
-input_button.pack(pady=5)
+title_label = Label(root, text="WEBP to JPEG Converter", font=("Helvetica", 16, "bold"))
+title_label.pack(pady=20)
 
-output_label = Label(root, text="Output Directory: ")
-output_label.pack(pady=10)
-output_button = Button(root, text="Select Output Directory", command=select_output_directory)
-output_button.pack(pady=5)
+input_frame = Frame(root)
+input_frame.pack(fill=BOTH, padx=20, pady=5)
 
-convert_button = Button(root, text="Start Conversion", command=start_conversion)
+input_label = Label(input_frame, text="Input Directory: ", font=("Helvetica", 12))
+input_label.pack(side=LEFT)
+input_button = Button(input_frame, text="Select", command=select_input_directory, font=("Helvetica", 12), bg="lightblue")
+input_button.pack(side=RIGHT)
+
+output_frame = Frame(root)
+output_frame.pack(fill=BOTH, padx=20, pady=5)
+
+output_label = Label(output_frame, text="Output Directory: ", font=("Helvetica", 12))
+output_label.pack(side=LEFT)
+output_button = Button(output_frame, text="Select", command=select_output_directory, font=("Helvetica", 12), bg="lightgreen")
+output_button.pack(side=RIGHT)
+
+convert_button = Button(root, text="Start Conversion", command=start_conversion, font=("Helvetica", 12), bg="lightgray")
 convert_button.pack(pady=20)
 
-# Run the application
+status_label = Label(root, text="", font=("Helvetica", 12))
+status_label.pack(pady=5)
+
 root.mainloop()
