@@ -102,7 +102,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Author
 
-Developed by Enigm.
+Developed by EnigmaK9.
 
 ## Acknowledgements
 
