@@ -44,7 +44,7 @@ def create_gui():
         about_window = Tk()
         about_window.title("About")
         about_window.geometry("300x200")
-        about_label = Label(about_window, text="WEBP to JPEG Converter\nVersion 1.0\nDeveloped by Enigm\n© 2024", font=roboto_font, justify="center")
+        about_label = Label(about_window, text="WEBP to JPEG Converter\nVersion 1.0\nDeveloped by EnigmaK9\n© 2024", font=roboto_font, justify="center")
         about_label.pack(expand=True)
         about_window.mainloop()
 
